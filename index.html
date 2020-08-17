@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="index.js"></script>
+        <script src="LayerManager.js"></script>
+        <style>
+            canvas{
+                border: 1px solid black;
+                position: absolute;
+            }
+
+            #canvasContainer{
+                flex-grow: 1;
+            }
+
+            li:hover{
+                cursor:pointer
+            }
+
+        </style>
+    </head>
+    <body>
+        <input type="file" name="Upload" accept=".jpg, .jpeg, .png">
+        <div style="display: flex;">
+            <div id="canvasContainer"></div>
+            <ul id="layers"></ul>
+        </div>
+    </body>
+<html>
