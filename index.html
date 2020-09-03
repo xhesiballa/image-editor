@@ -3,45 +3,50 @@
 <head>
     <script src="index.js"></script>
     <script src="LayerManager.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-        canvas {
-            border: 1px solid black;
-        }
 
-        .layer {
-            position: relative;
-            display: inline-block;
-        }
-
-        canvas {
-            position: absolute;
-        }
-
-        #canvasContainer {
-            overflow: hidden;
-            width: 500px;
-            height: 500px;
-            border: solid black 1px;
-            resize: both;
-
-            background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-        }
-
-        li:hover {
-            cursor: pointer
-        }
     </style>
 </head>
 
 <body>
-    <input id="export" type="button" value="Export">
-    <input id="crop" type="button" value="Crop">
-    <input type="file" name="Upload" accept=".jpg, .jpeg, .png">
-    <div style="display: flex;">
-        <div id="canvasContainer"></div>
-        <ul id="layers"></ul>
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    File
+                    <i class="arrow"></i>
+                    <ul class="menu-entry">
+                        <li>New Project</li>
+                        <li>Open</li>
+                        <li>Save</li>
+                        <li onclick="openFileUploadDialog()">New Image Layer</li>
+                        <li onclick="exportImage()">Export</li>
+                    </ul>
+                </li>
+                <li>
+                    Edit
+                    <i class="arrow"></i>
+                    <ul class="menu-entry">
+                        <li onclick="startCrop()">Crop</li>
+                        <li>Delete layer</li>
+                        <li>Open</li>
+                    </ul>
+                </li>
+                <li>
+                    View
+                    <i class="arrow"></i>
+                </li>
+            </ul>
+            <object id="layerButton" type="image/svg+xml" data="assets/icons/layers.svg"></object>
+        </nav>
+    </header>
+    <main>
+        <input type="file" name="Upload" accept=".jpg, .jpeg, .png">
+        <div style="display: flex; justify-content: center;">
+            <div id="canvasContainer"></div>
+            <ul id="layers"></ul>
+        </div>
+    </main>
 </body>
 <html>
