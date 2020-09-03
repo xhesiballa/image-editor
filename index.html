@@ -5,19 +5,23 @@
         <style>
             canvas{
                 border: 1px solid black;
-                position: absolute;
             }
 
             .layer{
                 position: relative;
+                display: inline-block;
+            }
+
+            canvas{
+                position:absolute;
             }
 
             #canvasContainer{
-                flex-grow: 1;
                 overflow: hidden;
-                min-width: 500px;
-                min-height: 500px;
+                width: 500px;
+                height: 500px;
                 border: solid black 1px;
+                resize: both;
             }
 
             li:hover{
@@ -27,7 +31,8 @@
         </style>
     </head>
     <body>
-        <input type="button" value="Crop">
+        <input id="export" type="button" value="Export">
+        <input id="crop" type="button" value="Crop">
         <input type="file" name="Upload" accept=".jpg, .jpeg, .png">
         <div style="display: flex;">
             <div id="canvasContainer"></div>
