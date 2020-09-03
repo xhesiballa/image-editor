@@ -45,7 +45,6 @@ class Layer {
         const end = this.translate(x2, y2);
         const width = end.x - start.x;
         const height = end.y - start.y;
-
         this.clear();
         const ctx = this.canvas.getContext('2d');
         ctx.setLineDash([4, 2]);
@@ -74,13 +73,13 @@ class Layer {
         const ctx = this.canvas.getContext('2d');
         const imagedata = ctx.getImageData(start.x, start.y, width, height);
         this.clear();
-        this.canvas.setAttribute("width", imagedata.width);
-        this.canvas.setAttribute("height", imagedata.height);
+        this.canvas.setAttribute("width", width);
+        this.canvas.setAttribute("height", height);
         ctx.putImageData(imagedata, 0, 0);
     }
 
     translate(x, y) {
-        return { x: x * this.canvas.width / this.width, y: y * this.canvas.height / this.height }
+        return { x: x * this.canvas.width / this.canvas.getAttribute("width"), y: y * this.canvas.height / this.canvas.getAttribute("height") }
     }
 
     set opacity(opacity) {

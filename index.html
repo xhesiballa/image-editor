@@ -5,14 +5,19 @@
         <style>
             canvas{
                 border: 1px solid black;
+                position: absolute;
             }
 
             .layer{
-                position: absolute;
+                position: relative;
             }
 
             #canvasContainer{
                 flex-grow: 1;
+                overflow: hidden;
+                min-width: 500px;
+                min-height: 500px;
+                border: solid black 1px;
             }
 
             li:hover{

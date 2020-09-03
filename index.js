@@ -1,6 +1,7 @@
 let layerManager = null;
 let actionsLayer = null;
 let activeLayer = null;
+let movingLayer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     layerManager = new LayerManager();
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showNewLayer(actionsLayer, false);
     initializeActionsLayer(actionsLayer, false);
     actionsLayer.canvas.parentElement.style.zIndex = 5;
+    actionsLayer.canvas.parentElement.style.visibility = 'hidden';
 
     const input = document.querySelector('input[type=file]');
     input.addEventListener('change', (event) => {
@@ -26,7 +28,36 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     const button = document.querySelector('input[type=button]');
-    button.addEventListener('click', crop);
+    button.addEventListener('click', (event) => {
+        event.target.blur();
+        const style = activeLayer.canvas.parentElement.style;
+        const _style = actionsLayer.canvas.parentElement.style
+        _style.top = style.top;
+        _style.left = style.left;
+        actionsLayer.canvas.getContext('2d').putImageData(new ImageData(activeLayer.canvas.width, activeLayer.canvas.height), 0, 0);
+        actionsLayer.canvas.setAttribute("width", activeLayer.canvas.width);
+        actionsLayer.canvas.setAttribute("height", activeLayer.canvas.height);
+        actionsLayer.canvas.parentElement.style.removeProperty('visibility');
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key == "Enter") {
+            crop();
+        }
+    });
+
+    document.body.addEventListener('mousemove', (event) => {
+        if (movingLayer) {
+            const { movementX, movementY } = event;
+            const style = movingLayer.canvas.parentElement.style;
+
+            let left = Number(style.left.substring(0, style.left.indexOf('px'))) || 0;
+            let top = Number(style.top.substring(0, style.top.indexOf('px'))) || 0;
+
+            style.left = (left + Number(movementX) ) + 'px';
+            style.top = (top + Number(movementY) ) + 'px';
+        }
+    });
 });
 
 function showNewLayer(layer, list = true) {
@@ -43,8 +74,27 @@ function showNewLayer(layer, list = true) {
         li.addEventListener('click', (event) => {
             layerManager.bringLayerToFront(layer);
             activeLayer = layer;
-        })
+        });
+
         document.getElementById('layers').append(li);
+
+        layer.canvas.addEventListener("mousedown", () => {
+            if (activeLayer === layer) {
+                movingLayer = layer;
+            }
+        });
+
+        layer.canvas.addEventListener("mouseup", () => {
+            movingLayer = null;
+        });
+
+        document.body.addEventListener("mouseup", () => {
+            movingLayer = null;
+        });
+
+        document.getElementById('canvasContainer').addEventListener('mouseleave', (event) => {
+            movingLayer = null;
+        })
     }
 }
 
@@ -76,8 +126,9 @@ function initializeActionsLayer(layer) {
 }
 
 function crop() {
+    actionsLayer.canvas.parentElement.style.visibility = 'hidden';
+
     if (activeLayer && actionsLayer.selection) {
-        console.log(activeLayer,actionsLayer.selection);
         actionsLayer.clear();
         activeLayer.crop(actionsLayer.selection);
         actionsLayer.selection = null;
