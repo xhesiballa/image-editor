@@ -4,9 +4,6 @@
     <script src="index.js"></script>
     <script src="LayerManager.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -38,14 +35,16 @@
                     <i class="arrow"></i>
                 </li>
             </ul>
-            <object id="layerButton" type="image/svg+xml" data="assets/icons/layers.svg"></object>
+            <div id="layerContainer">
+                <img id="layerButton"  src="assets/icons/layers.svg" toggle="layers"></object>
+                <ul layers id="layers" class="hidden"></ul>
+            </div>
         </nav>
     </header>
     <main>
         <input type="file" name="Upload" accept=".jpg, .jpeg, .png">
         <div style="display: flex; justify-content: center;">
             <div id="canvasContainer"></div>
-            <ul id="layers"></ul>
         </div>
     </main>
 </body>

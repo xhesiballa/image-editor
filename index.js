@@ -46,6 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    document.querySelectorAll('[toggle]').forEach(element => {
+        const selector = element.getAttribute('toggle');
+        element.addEventListener('click', () => {
+            const target =  document.querySelector(`[${selector}]`);
+            if(target){
+                const visibility = target.style.visibility;
+                target.style.visibility = visibility === 'visible' ? 'hidden' : 'visible';
+            }
+        })
+    })
+
 });
 
 function exportImage(){
